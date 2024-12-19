@@ -26,7 +26,7 @@ The Crew AI Smart Contract Audit System mimics the process of a real-world audit
    ```bash
    python3 main.py
    ```
-
+5. Dont forget to add .env file with OPENAI_API_KEY
 ---
 
 ## **System Architecture**
