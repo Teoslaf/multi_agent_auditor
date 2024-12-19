@@ -9,7 +9,7 @@ The Crew AI Smart Contract Audit System mimics the process of a real-world audit
 
 1. Create a virtual environment:
    ```bash
-   python -m venv venv
+   python3 -m venv venv
    ```
 
 2. Activate the virtual environment:
@@ -27,6 +27,21 @@ The Crew AI Smart Contract Audit System mimics the process of a real-world audit
    python3 main.py
    ```
 5. Dont forget to add .env file with OPENAI_API_KEY
+
+### **Docker Setup**
+
+1. Build the Docker image:
+   ```bash
+   docker build -t crew-ai-audit .
+   ```
+
+2. Run the container:
+   ```bash
+   docker run -it --env-file .env crew-ai-audit
+   ```
+
+Note: Make sure your `.env` file is in the same directory when running the Docker container.
+
 ---
 
 ## **System Architecture**
