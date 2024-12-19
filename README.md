@@ -1,29 +1,107 @@
-## agents.py
-This file contains the definition of custom agents.
-To create a Agent, you need to define the following:
-1. Role: The role of the agent.
-2. Backstory: The backstory of the agent.
-3. Goal: The goal of the agent.
-4. Tools: The tools that the agent has access to (optional).
-5. Allow Delegation: Whether the agent can delegate tasks to other agents(optional).
+# Crew AI Smart Contract Audit System
 
-    [More Details about Agent](https://docs.crewai.com/concepts/agents).
+## **Overview**
+The Crew AI Smart Contract Audit System mimics the process of a real-world audit firm by leveraging a "Crew AI" pattern. This approach involves multiple AI agents, each specializing in distinct areas, working collaboratively to deliver a comprehensive audit of a given smart contract.
 
-## task.py
-This file contains the definition of custom tasks.
-To Create a task, you need to define the following :
-1. description: A string that describes the task.
-2. agent: An agent object that will be assigned to the task.
-3. expected_output: The expected output of the task.
+---
 
-    [More Details about Task](https://docs.crewai.com/concepts/tasks).
+## **Setup Instructions**
 
-## crew (main.py)
-This is the main file that you will use to run your custom crew.
-To create a Crew , you need to define Agent ,Task and following Parameters:
-1. Agent: List of agents that you want to include in the crew.
-2. Task: List of tasks that you want to include in the crew.
-3. verbose: If True, print the output of each task.(default is False).
-4. debug: If True, print the debug logs.(default is False).
+1. Create a virtual environment:
+   ```bash
+   python -m venv venv
+   ```
 
-    [More Details about Crew](https://docs.crewai.com/concepts/crew).
+2. Activate the virtual environment:
+   ```bash
+   source venv/bin/activate
+   ```
+
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Run the main program:
+   ```bash
+   python3 main.py
+   ```
+
+---
+
+## **System Architecture**
+
+### **1. Agents**
+The system comprises six specialized AI agents, each with a specific focus:
+
+- **Lead Smart Contract Auditor**: Manages the audit process and oversees the team.
+- **Security Vulnerability Expert**: Identifies security weaknesses and potential exploits.
+- **Business Logic Analyzer**: Reviews the contract’s logic to ensure compliance with intended functionality.
+- **On-Chain Data Analyst**: Analyzes blockchain data patterns for anomalies and insights.
+- **White Hat Hacker**: Simulates exploits to test the contract’s robustness.
+- **Documentation Specialist**: Compiles findings into a professional audit report.
+
+Each agent operates independently using their own LLM (GPT-3.5 or GPT-4) and communicates findings to the rest of the team.
+
+---
+
+### **2. Process Flow**
+
+The system follows a sequential process where tasks build upon the output of previous tasks. Below is a high-level workflow diagram:
+
+```mermaid
+graph LR
+    A[Read Contract File] --> B[Initialize Agents]
+    B --> C[Execute Tasks Sequentially]
+    C -->|Task 1| D[Initial Vulnerability Scan]
+    D -->|Task 2| E[Business Logic Review]
+    E -->|Task 3| F[Exploit Analysis]
+    F -->|Task 4| G[Final Report]
+```
+
+#### **Detailed Steps:**
+1. **Setup:**
+   - Loads environment variables (e.g., `OPENAI_API_KEY`).
+   - Reads the smart contract code from `test.sol`.
+
+2. **Task Execution:**
+   Each task is executed sequentially, with outputs passed forward:
+   ```python
+   task1 = tasks.initial_vulnerability_scan(security_expert, contract_code)
+   task2 = tasks.business_logic_review(business_analyst, contract_code, f"{task1.output}")
+   task3 = tasks.exploit_scenario_analysis(white_hat, contract_code, f"{task1.output}\n{task2.output}")
+   task4 = tasks.final_report_compilation(doc_specialist, f"{task1.output}\n{task2.output}\n{task3.output}")
+   ```
+
+3. **Crew Coordination:**
+   The **Crew** class manages agent communication and task dependencies:
+   ```python
+   crew = Crew(
+       agents=[security_expert, business_analyst, white_hat, doc_specialist],
+       tasks=[task1, task2, task3, task4],
+       verbose=True
+   )
+   ```
+
+4. **Output:**
+   The final output is a detailed security audit report, combining findings from all stages and formatted by the Documentation Specialist.
+
+---
+
+## **Features**
+
+1. **Sequential Dependencies**: Tasks build on the outputs of previous tasks, ensuring a logical flow of analysis.
+2. **Specialized Expertise**: Each agent focuses on a specific aspect of the audit process, mirroring real-world practices.
+3. **Error Handling**: Checks for missing files, API key configuration issues, and other potential errors.
+4. **Verbose Output**: Provides real-time tracking of the audit’s progress for greater transparency.
+
+---
+
+## **Output**
+The final output is a comprehensive report, including:
+- Identified vulnerabilities and security risks
+- Business logic inconsistencies
+- Simulated exploit scenarios
+- Recommendations for improvement
+
+This report ensures thorough coverage and actionable insights for securing smart contracts.
