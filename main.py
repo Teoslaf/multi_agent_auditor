@@ -14,13 +14,13 @@ def read_contract_file(file_path):
 
 if __name__ == "__main__":
     # Check if API key is loaded
-    if not os.getenv('OPENAI_API_KEY'):
-        print("Error: OPENAI_API_KEY not found in .env file")
+    if not os.getenv('DEEPSEEK_API_KEY'):
+        print("Error: DEEPSEEK_API_KEY not found in .env file")
         exit(1)
         
     print("## Welcome to Smart Contract Security Audit Crew")
     print("----------------------------------------------")
-    contract_path = "test.sol" 
+    contract_path = "test.py" 
     
     try:
         # Read contract code

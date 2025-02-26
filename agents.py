@@ -1,6 +1,7 @@
 from crewai import Agent
 from textwrap import dedent
 from langchain_openai import ChatOpenAI
+import os
 
 
 
@@ -40,8 +41,12 @@ from langchain_openai import ChatOpenAI
 """
 class CustomAgents:
     def __init__(self):
-        self.OpenAIGPT35 = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0.7)
-        self.OpenAIGPT4 = ChatOpenAI(model_name="gpt-4", temperature=0.7)
+        self.Deepseek = ChatOpenAI(
+            model_name="deepseek/deepseek-chat",
+            openai_api_key=os.getenv('DEEPSEEK_API_KEY'),
+            openai_api_base="https://api.deepseek.com/v1",
+            temperature=0.7
+        )
 
     def lead_smart_contract_auditor(self):
         return Agent(
@@ -74,7 +79,7 @@ class CustomAgents:
             # tools=[tool_1, tool_2],
             allow_delegation=False,
             verbose=True,
-            llm=self.OpenAIGPT35,
+            llm=self.Deepseek,
         )
 
     def security_vulnerability_expert(self):
@@ -107,7 +112,7 @@ class CustomAgents:
                 7. Documenting findings with severity classifications"""),
             allow_delegation=True,
             verbose=True,
-            llm=self.OpenAIGPT4
+            llm=self.Deepseek
         )
 
     def business_logic_analyzer(self):
@@ -140,7 +145,7 @@ class CustomAgents:
                 7. Providing architectural improvement recommendations"""),
             allow_delegation=True,
             verbose=True,
-            llm=self.OpenAIGPT4
+            llm=self.Deepseek
         )
 
     def on_chain_data_analyst(self):
@@ -173,7 +178,7 @@ class CustomAgents:
                 7. Providing data-backed risk assessments"""),
             allow_delegation=True,
             verbose=True,
-            llm=self.OpenAIGPT4  # Using GPT-4 for better analysis
+            llm=self.Deepseek
         )
 
     def white_hat_hacker(self):
@@ -206,7 +211,7 @@ class CustomAgents:
                 7. Providing exploitation difficulty ratings"""),
             allow_delegation=True,
             verbose=True,
-            llm=self.OpenAIGPT4
+            llm=self.Deepseek
         )
 
     def documentation_specialist(self):
@@ -239,5 +244,5 @@ class CustomAgents:
                 7. Maintaining audit report quality standards"""),
             allow_delegation=True,
             verbose=True,
-            llm=self.OpenAIGPT4
+            llm=self.Deepseek
         )
